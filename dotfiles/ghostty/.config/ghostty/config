@@ -1,2 +1,29 @@
 font-size = 16
 window-padding-x = 8
+# theme = dark
+
+# # Colors (Migrated from your Kitty theme)
+# foreground = #FFFFFF
+# background = #1D1C29
+# cursor-color = #B9B6CC
+
+# palette = 0=#2C2952
+# palette = 1=#D3CCFF
+# palette = 2=#CFCCFF
+# palette = 3=#D1CCFF
+# palette = 4=#A09AE6
+# palette = 5=#9F9AE6
+# palette = 6=#A19AE6
+# palette = 7=#D3CCFF
+# palette = 8=#5B578F
+# palette = 9=#B4AAF0
+# palette = 10=#AFAAF0
+# palette = 11=#B1AAF0
+# palette = 12=#A09AE6
+# palette = 13=#9F9AE6
+# palette = 14=#A19AE6
+# palette = 15=#B4AAF0
+
+# # Window settings
+# window-decoration = false
+# confirm-close-surface = false

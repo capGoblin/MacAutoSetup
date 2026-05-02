@@ -2,16 +2,14 @@
 
 set -euo pipefail
 
-# Install Xcode Command Line Tools if not already installed
+# ── Xcode CLI Tools ────────────────────────────────────────────────────────────
 if ! xcode-select -p &>/dev/null; then
   echo "Installing Xcode Command Line Tools..."
   xcode-select --install
-  until xcode-select -p &>/dev/null; do
-    sleep 5
-  done
+  until xcode-select -p &>/dev/null; do sleep 5; done
 fi
 
-# Install Homebrew if not already installed
+# ── Homebrew ───────────────────────────────────────────────────────────────────
 if ! command -v brew &>/dev/null; then
   echo "Installing Homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -19,28 +17,34 @@ if ! command -v brew &>/dev/null; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# Install applications via Brewfile
-if [[ -f ./Brewfile ]]; then
-  echo "Installing applications from Brewfile..."
-  brew bundle --file=./Brewfile
-else
-  echo "Warning: Brewfile not found in current directory"
-fi
-
-# Install Zap ZSH plugin manager
-if [[ ! -d "${XDG_DATA_HOME:-$HOME/.local/share}/zap" ]]; then
-  echo "Installing Zap ZSH plugin manager..."
-  zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
-  echo "Removing .zshrc so stow can manage it..."
-  rm -f ~/.zshrc
-fi
-
-# Re-source Homebrew env just in case
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# Use GNU Stow to symlink dotfiles
-echo "Setting up dotfiles with GNU Stow..."
-stow --target="$HOME" --dir=./dotfiles zsh vim nvim aerospace
+# ── Brewfile ───────────────────────────────────────────────────────────────────
+echo "Installing packages from Brewfile..."
+brew bundle --file=./Brewfile
 
-# Optionally restart the shell
-exec zsh -l
+# ── Zap (ZSH plugin manager) ───────────────────────────────────────────────────
+if [[ ! -d "${XDG_DATA_HOME:-$HOME/.local/share}/zap" ]]; then
+  echo "Installing Zap..."
+  zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
+  rm -f ~/.zshrc  # stow will manage this
+fi
+
+# ── Dotfiles (GNU Stow) ────────────────────────────────────────────────────────
+echo "Symlinking dotfiles..."
+stow --target="$HOME" --dir=./dotfiles zsh vim nvim aerospace tmux ghostty swiftbar
+
+# ── SwiftBar ───────────────────────────────────────────────────────────────────
+chmod +x "$HOME/Library/Application Support/SwiftBar/Plugins/spaces.sh" 2>/dev/null || true
+# Point SwiftBar at the stowed plugin directory
+defaults write com.ameba.SwiftBar PluginDirectory "$HOME/Library/Application Support/SwiftBar/Plugins"
+
+# ── Services ───────────────────────────────────────────────────────────────────
+brew services start borders 2>/dev/null || true
+
+# ── Launch GUI apps ────────────────────────────────────────────────────────────
+open -a AeroSpace  2>/dev/null || true
+open -a SwiftBar   2>/dev/null || true
+
+echo ""
+echo "Done. Restart your terminal or run: exec zsh -l"
