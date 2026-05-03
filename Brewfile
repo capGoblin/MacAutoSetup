@@ -47,6 +47,7 @@ cask "ghostty"
 cask "nikitabobko/tap/aerospace"
 brew "FelixKratz/formulae/borders"  # Window borders for AeroSpace
 cask "swiftbar"                     # Workspace indicator in native menu bar
+cask "jordanbaird-ice"              # Menu bar icon manager (replaces Hidden Bar)
 cask "caffeine"
 cask "discord"
 # cask "chatgpt"

@@ -111,8 +111,9 @@ zle -N select-to-end
 # ── Bindings ──────────────────────────────────────────────────────────────────
 bindkey '^s'   backward-kill-word
 bindkey '^H'   backward-kill-word
+bindkey '^?'   backward-delete-char
 bindkey '^w'   kill-word
-bindkey '^a'   backward-kill-line
+bindkey '^u'   backward-kill-line
 bindkey '^d'   kill-line
 bindkey '^[s'  select-word-backward
 bindkey '^[w'  select-word-forward
@@ -130,3 +131,11 @@ eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
 
 export AUTO_NOTIFY_IGNORE=("docker" "npm" "yarn" "pnpm" "forge" "remixd" "tmux")
+
+bindkey -e  # Explicitly set emacs mode first
+bindkey -r '^?'  # Remove existing binding first
+bindkey -r '^H'  # Remove existing binding first
+bindkey '^?' backward-delete-char
+bindkey '^H' backward-kill-word
+bindkey '\e[1;5D' beginning-of-line
+bindkey '\e[1;5C' end-of-line

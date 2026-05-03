@@ -4,7 +4,8 @@ start-at-login = true
 
 # Launch JankyBorders on startup
 after-startup-command = [
-    'exec-and-forget borders active_color=0xffe2e2e3 inactive_color=0xff414550 width=5.0 style=round'
+    'exec-and-forget borders active_color=0xffe2e2e3 inactive_color=0xff414550 width=5.0 style=round',
+    'exec-and-forget open "swiftbar://refreshallplugins"'
 ]
 
 # Refresh SwiftBar workspace indicator on every workspace switch

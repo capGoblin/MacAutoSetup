@@ -28,7 +28,7 @@ done
 TITLE="${TITLE%   }"
 
 # Using 'SF Pro Rounded' and a slightly larger size for a premium feel
-printf "%s | ansi=true size=12 font='SF Pro Rounded'\n" "$TITLE"
+printf "%s | ansi=true size=13 font='SF Pro Rounded'\n" "$TITLE"
 echo "---"
 
 for ws in "${WORKSPACES[@]}"; do
